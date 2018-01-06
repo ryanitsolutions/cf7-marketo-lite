@@ -36,6 +36,6 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 ## Installation 
 
 1. Download and unzip the contact-form-7.zip file and upload to wp-content/plugins directory. then activate the plugin through the Plugins section in WordPress
-2. Unzip the marketo-pro-for-cf7.zip file and upload to wp-content/plugins directory.
+2. Unzip the cf7-marketo-lite.zip file and upload to wp-content/plugins directory.
 3. Activate the plugin through the Plugins section in WordPress
-4. Configure Marketo Pro Goto Contact Menu > Integration > Marketo  
+4. Configure Marketo Lite Goto Contact Menu > Integration > Marketo  

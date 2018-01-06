@@ -117,6 +117,8 @@ class CF7_MarketoLite_Core {
 
 	public static function insert_new_post( $title, $desc, $post_type, $status ){
 
+		if( empty($post_type) ) return;
+
 		$post_id    = -1;
 		$item_name  = wp_kses_post( $title );
 		$slug		= $item_name;
@@ -166,6 +168,8 @@ class CF7_MarketoLite_Core {
 
    public static function update_post( $id, $title, $desc, $post_type, $status ){
 
+   	if( empty($post_type) ) return;
+   	
    	$author     = get_current_user_id() > 0 ? get_current_user_id() : 0;
 
 	$post_id = wp_update_post(
