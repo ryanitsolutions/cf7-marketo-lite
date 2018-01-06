@@ -1,14 +1,14 @@
 # Marketo Lite for Contact Form 7
 This extension allows you to capture and generate leads, tracking and push data into Marketo Lead Database using REST API.
 
-##Marketo Lite Features
+## Marketo Lite Features
 
 * Easy and Manageable Extension Settings
 * Capture Lead Automatically using Contact Form 7
 * Lead Tracking (Munchkin).
 * Contact Form 7 Input Tag Generator for Marketo ( Text, Email, Url and Tel ... )
 
-##Marketo Pro Version Features  
+## Marketo Pro Version Features  
 
 * Premium Support
 * Easy and Manageable Extension Settings
@@ -23,11 +23,11 @@ This extension allows you to capture and generate leads, tracking and push data 
 
 For more information, see [Marketo Pro](https://codecanyon.net/item/marketo-pro-for-contact-form-7/21201340)
 
-##Marketo Lead Database API Info 
+## Marketo Lead Database API Info 
 
 For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 
-##Minimum Requirements 
+## Minimum Requirements 
 
 *   Contact Form 7 4.7
 *   WordPress 4.4+
