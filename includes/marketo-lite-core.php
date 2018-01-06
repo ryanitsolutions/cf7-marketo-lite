@@ -5,7 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  * Marketo Lite Core Class
  * 
  * @author Ryan IT Solutions
- * @version Pro since 1.0
+ * @version since 1.0
  */
 
 

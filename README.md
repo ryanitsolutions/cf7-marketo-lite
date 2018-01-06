@@ -33,7 +33,7 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 *   WordPress 4.4+
 *   PHP 5+
 
-##Installation 
+## Installation 
 
 1. Download and unzip the contact-form-7.zip file and upload to wp-content/plugins directory. then activate the plugin through the Plugins section in WordPress
 2. Unzip the marketo-pro-for-cf7.zip file and upload to wp-content/plugins directory.
