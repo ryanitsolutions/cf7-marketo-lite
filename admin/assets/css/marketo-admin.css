@@ -1,0 +1,72 @@
+.marketo-container {
+    background-color:   #fff;
+    padding:            10px;
+}
+
+.marketo-th-label-1 {
+    background-color: #F6F6F6;
+    border-bottom: 1px solid #E9E9E9;
+    border-right: 1px solid #E9E9E9;
+    color: #666666;
+    padding: 5px !important;
+    text-align: left;
+    width: 40%;
+    vertical-align: middle;
+}
+
+.marketo-th-label-2 {
+    border-bottom: 1px solid #E9E9E9;
+    color: #666666;
+    text-align: left;
+    width: auto;
+    vertical-align: middle;
+    padding: 5px !important;
+}
+
+.marketo-post-type-panel {
+    padding: 10px;
+    color: #555;
+}
+
+#marketo_data h2 {
+    margin: 0;
+    font-size: 21px;
+    line-height: 1.2;
+    text-shadow: 1px 1px 1px #fff;
+    padding: 0;
+
+    font-family: HelveticaNeue-Light,'Helvetica Neue Light','Helvetica Neue',sans-serif;
+    font-weight: 400;
+}
+
+#marketo_data p.marketo-number {
+    margin: 0;
+    line-height: 1.6em;
+    font-size: 16px;
+}
+
+#marketo_data p {
+    color: #777;
+}
+
+.marketo-data-column-container {
+    clear: both;
+    overflow: hidden;
+}
+
+.marketo-data-column {
+    width: 40%;
+    padding: 0 2% 0 0;
+    float: left;
+    overflow: hidden;
+}
+
+.marketo-input-text {
+    width: 100%;
+    padding: 10px;
+    background: #f5f5f5 !important;
+}
+
+#marketo_list-adder .taxonomy-add-new {
+    display: none;
+}
