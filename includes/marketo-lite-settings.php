@@ -91,7 +91,6 @@ class CF7_MarketoLite_Settings extends WPCF7_Service {
 
 				$enable = isset( $_POST['enable'] ) ? trim( $_POST['enable'] ) : '';
 				$marketo_munchkin_id = isset( $_POST['marketo_munchkin_id'] ) ? trim( $_POST['marketo_munchkin_id'] ) : '';
-				//$marketo_base_url = isset( $_POST['marketo_base_url'] ) ? trim( $_POST['marketo_base_url'] ) : '';
 				$marketo_client_id = isset( $_POST['marketo_client_id'] ) ? trim( $_POST['marketo_client_id'] ) : '';
 				$marketo_client_secret = isset( $_POST['marketo_client_secret'] ) ? trim( $_POST['marketo_client_secret'] ) : '';
 
@@ -178,8 +177,6 @@ class CF7_MarketoLite_Settings extends WPCF7_Service {
 						if( $marketo_list[ 'code' ] == 1 && $marketo_list[ 'response_code' ] == 200  ){
 							$data_list = $marketo_list[ 'response_body' ]->result;
 
-							//do_action( 'cf7mkto_db_reset_table', 'marketo_list' );
-
 							$params = array();
 
 							foreach ( $data_list as $key => $value) {
@@ -190,10 +187,7 @@ class CF7_MarketoLite_Settings extends WPCF7_Service {
 									$params[ 'mkto_workspaceName' ]	= ! empty($value->workspaceName) ? $value->workspaceName : '';
 									$params[ 'mkto_createdAt' ]		= ! empty($value->createdAt) ? $value->createdAt : '';
 									$params[ 'mkto_updatedAt' ]		= ! empty($value->updatedAt) ? $value->updatedAt : '';
-
-									//do_action( 'cf7mkto_save_marketo_list', $params );	
-									//do_action( 'cf7mkto_reset_marketo_list' );
-
+									
 									$t = term_exists( ucwords($params[ 'mkto_name' ]), 'marketo_list',0 );
 
 									if(  $t == 0 || $t == null || empty($t) ){

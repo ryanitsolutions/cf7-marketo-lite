@@ -97,6 +97,9 @@ class CF7_MarketoLite_Core {
 					
 				}
 
+				// Add to Marketo List
+				self::add_to_list( $form_id, $lead_id );
+
 			}
 
 		}
@@ -250,19 +253,6 @@ class CF7_MarketoLite_Core {
 						didInit = true;
 						Munchkin.init('<?php echo $marketo_munchkin_id;?>', { 'asyncOnly': true, 'disableClickDelay': true, 'customName': '<?php echo esc_html( get_the_title() );?>' });
 						Munchkin.createTrackingCookie(true);
-						
-						//Visit Web Page
-						Munchkin.munchkinFunction('visitWebPage', {
-						        'url': '<?php echo home_url(add_query_arg(array(),$wp->request));?>',
-						        'params': ''
-						    }
-						);
-
-						//Click Link
-						Munchkin.munchkinFunction('clickLink', {
-						        'href': '<?php echo home_url(add_query_arg(array(),$wp->request));?>'
-						    }
-						);
 
 					}
 				}
@@ -282,6 +272,104 @@ class CF7_MarketoLite_Core {
 			/* ]]> */
 		</script>
 		<?php
+	}
+
+	public static function add_to_list( $form_id, $lead_id ){
+
+		if (empty($form_id)) return;
+
+		if (empty($lead_id)) return;
+
+		
+		$creds = WPCF7::get_option( 'cf7_marketo' );
+
+		if( ! empty($creds) && array_key_exists( 'on' , $creds )){
+
+			$marketo_id 	= $creds['on'][ 'marketo_munchkin_id' ];
+			$client_id 		= $creds['on'][ 'marketo_client_id' ];
+			$client_secret 	= $creds['on'][ 'marketo_client_secret' ];
+			$cf7_id 		= 'cf7_mkto_id_7770';
+
+			// Add to Marketo list
+			$term_id = get_post_meta( sanitize_text_field( $form_id ), 'marketo_form_list', true );
+			$list_id = get_option( "mkto_taxonomy_term_list_$term_id" );
+
+			if( ! empty( $list_id ) && $list_id > 0 ){
+
+				$data_ids = array( 'id' =>  $lead_id );
+				$result_list = apply_filters( 'cf7mkto_add_lead_to_list', $list_id, $data_ids ); 
+
+				if( $result_list[ 'code' ] === true && $result_list[ 'response_code' ] == 200 && $result_list[ 'response_body' ]->success === true ){
+
+					$args = array(
+						'meta_key' 		=> 'mkto_ID',
+						'meta_value' 	=> $lead_id,
+						'post_type'  	=> 'marketo_leads',
+						'meta_compare' 	=> '='
+					);
+
+					$query = new WP_Query( $args );
+					if( isset( $query->post->ID ) ){
+						$t = get_term( $term_id, 'marketo_list' );
+						$r = wp_set_object_terms( $query->post->ID, $t->slug, 'marketo_list' );
+					}
+					
+				}
+
+			}
+			wp_reset_postdata();
+		}
+	}
+
+	public static function reset_marketo_list(){
+		if ( is_admin() ) {
+          $terms = get_terms( 'marketo_list', array( 'fields' => 'ids', 'hide_empty' => false ) );
+          foreach ( $terms as $value ) {
+               wp_delete_term( $value, 'marketo_list' );
+          }
+     	}
+	}
+
+	public static function get_marketo_list(){
+		
+          $terms = get_terms( 'marketo_list', array( 'hide_empty' => false ) );
+          $list =  array();
+          foreach ( $terms as $value ) {
+          	    $term_id = $value->term_id;
+          	    $list[$term_id] = $value->name;
+                
+          }
+
+          return $list;
+     	
+	}
+
+	public static function taxonomy(){
+		$labels = array(
+			'name'              => _x( 'Marketo List', 'taxonomy general name', 'contact-form-7' ),
+			'singular_name'     => _x( 'List', 'taxonomy singular name', 'contact-form-7' ),
+			'search_items'      => __( 'Search List', 'contact-form-7' ),
+			'all_items'         => __( 'All List', 'contact-form-7' ),
+			'parent_item'       => __( 'Parent List', 'contact-form-7' ),
+			'parent_item_colon' => __( 'Parent List:', 'contact-form-7' ),
+			'edit_item'         => __( 'Edit List', 'contact-form-7' ),
+			'update_item'       => __( 'Update List', 'contact-form-7' ),
+			'add_new_item'      => __( 'Add New List', 'contact-form-7' ),
+			'new_item_name'     => __( 'New List Name', 'contact-form-7' ),
+			'menu_name'         => __( 'List', 'contact-form-7' ),
+		);
+
+		$args = array(
+			'hierarchical'      => true,
+			'labels'            => $labels,
+			'show_ui'           => true,
+			'show_admin_column' => true,
+			'query_var'         => true,
+			'public' 			=> false,
+			'rewrite'           => false,
+		);
+
+		register_taxonomy( 'marketo_list', array( 'marketo_leads' ), $args );
 	}
 	
 }

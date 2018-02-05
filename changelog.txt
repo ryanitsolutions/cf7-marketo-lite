@@ -5,3 +5,9 @@
 * UPDATE: Readme.txt
 * UPDATE: create marketo db table leads if not exist
 
+= 1.2 01/06/2018 =
+* UPDATE: cleaning proversion code
+
+= 1.3 02/05/2018 =
+* UPDATE: Implement marketo list option on the contact form 7 tab
+

@@ -1,9 +1,9 @@
 === Marketo Lite for Contact Form 7 ===
 Contributors: ryanitsolutions
-Tags: cf7, contact form 7, form, marketo, mkto, email, contact
+Tags: cf7, contact form 7, form, marketo, mkto, email, contact, opt-in, newsletter, mailing list
 Requires at least: 4.7
-Tested up to: 4.9.1
-Stable tag: 1.1
+Tested up to: 4.9.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -16,22 +16,27 @@ This extension allows you to capture and generate leads, tracking and push data 
 = Marketo Lite Features =
 
 * Easy and Manageable Extension Settings
-* Capture Lead Automatically using Contact Form 7
-* Lead Tracking (Munchkin).
+* Capture Lead Automatically using Contact Form 7 (Opt-In)
+* Wordpress Post/Page Lead Lead Tracking (Munchkin).
 * Contact Form 7 Input Tag Generator for Marketo ( Text, Email, Url and Tel ... )
 
 = Marketo Pro Version Features  =
 
-* Premium Support
 * Easy and Manageable Extension Settings
-* Capture Lead Automatically using Contact Form 7
+* Capture Lead Automatically using Contact Form 7 (Opt-In)
 * Generate Lead Manually using Wordpress Custom Post Type
 * Update and Push to Marketo Lead Database Server
 * Save Marketo Lead Locally into Wordpress Custom Post Type
 * Leads Listing using Wordpress Custom Post Type Table
 * Pull Marketo List or Programs and Save to Custom Taxonomy
-* Lead Tracking (Munchkin).
-* Contact Form 7 Input Tag Generator for Marketo ( Text, Email, Url and Tel ... )
+* Wordpress Post/Page Lead Tracking (Munchkin).
+* Contact Form 7 Input Tag Generator for Marketo ( Text, Email, Url and Tel … )
+* Woocommmerce Marketo customer captured lead integration (Opt-In)
+* Woocommmerce Marketo tab settings
+* Woocommmerce sales orders Marketo tracking
+* Woocommmerce subscribe to marketo mailing list/program
+* Contact Form 7 Marketo lead structure management table
+* Contact Form 7 Marketo list/program management table
 
 For more information, see [Marketo Pro](https://codecanyon.net/item/marketo-pro-for-contact-form-7/21201340)
 
@@ -69,6 +74,12 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 * UPDATE: Readme.txt
 * UPDATE: create marketo db table leads if not exist
 
+= 1.2 =
+* UPDATE: cleaning proversion code
+
+= 1.3 =
+* UPDATE: Implement marketo list option on the contact form 7 tab
+
 == Upgrade Notice ==
 
 = 1.0  =
@@ -77,3 +88,10 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 = 1.1 =
 * UPDATE: Readme.txt
 * UPDATE: create marketo db table leads if not exist
+
+= 1.2 =
+* UPDATE: cleaning proversion code
+
+= 1.3 =
+* UPDATE: Implement marketo list option on the contact form 7 tab
+

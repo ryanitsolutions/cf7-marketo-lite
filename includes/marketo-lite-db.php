@@ -130,6 +130,14 @@ class CF7_MarketoLite_DB {
 
 	}
 
+	public static function db_unplugged(){
+
+		global $wpdb;
+
+		// remove marketo api settings
+		WPCF7::update_option( 'cf7_marketo', null );
+	}
+
 
 	/**
 	 * Get Marketo Fields Describe info
@@ -352,8 +360,6 @@ class CF7_MarketoLite_DB {
 				$marketo_id 	= $api_creds['on'][ 'marketo_munchkin_id' ];
 
 				$marketo_list = apply_filters( 'cf7mkto_get_list_records', $marketo_id );
-
-
 
 				if( $marketo_list[ 'code' ] == 1 && $marketo_list[ 'response_code' ] == 200  ){
 					$data_list = $marketo_list[ 'response_body' ]->result;

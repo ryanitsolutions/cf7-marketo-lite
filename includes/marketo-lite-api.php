@@ -67,6 +67,13 @@ class CF7_MarketoLite_API {
 		add_filter( 'cf7mkto_associate_lead', array( $this, 'lead_associate' ), 10, 2 );
 		add_filter( 'cf7mkto_delete_lead', array( $this, 'delete_lead' ), 10, 1 );
 
+		//Static Lists : Marketo Lists Controller
+		add_filter( 'cf7mkto_get_list_records', array( $this, 'get_list_records' ), 10, 1 );
+
+		// Add leads to Static List
+		add_action( 'cf7mkto_add_lead_to_list', array( $this, 'add_lead_to_list' ), 10, 2 );
+		add_filter( 'cf7mkto_add_lead_to_list', array( $this, 'add_lead_to_list' ), 10, 2 );
+
 		// Paging Tokens
         add_filter( 'cf7mkto_get_pagingtoken', array( $this, 'get_pagingtoken' ) );
 		
@@ -498,6 +505,94 @@ class CF7_MarketoLite_API {
 		$request = $this->call( $path, $params, $headers, 'GET' );
 
 		return $request;
+	}
+
+	/**
+	 * Marketo Get List Record
+	 *
+	 * @return array
+	 */
+
+
+	public function get_list_records( $marketo_id = '' ){
+
+		$marketo_id = ! empty($this->marketo_id) ? $this->marketo_id : $marketo_id;
+
+		if ( empty($marketo_id)) return;
+
+		if( $this->validate_expire_access_token() === true ){
+			// Re-Generate Token
+			do_action( 'cf7mkto_generate_identity_access_token', true );
+		}
+
+		// Get Access Token
+		$token = $this->get_access_token_creds();	
+
+		$base_url = str_replace($this->mkto_replace_id, $marketo_id , $this->base_url );
+
+		// Set API Path
+		$path = $base_url . '/rest/v1/lists.json';	
+
+		// Set Access Token
+		$headers = array( 'Authorization' => 'Bearer ' . $token[ 'access_token' ] );
+
+		// Set Body Params
+		$params = array();	
+		
+		// Fire
+		$request = $this->call( $path, $params, $headers, 'GET' );
+
+		return $request;	
+	}
+
+	/**
+	 * Marketo add lead to static list
+	 *
+	 * @param string $list_id
+	 * @param array $data_ids
+	 *
+	 * @retuen array
+	 *
+	 */
+
+	public function add_lead_to_list( $list_id, $data_ids = array() ) {
+
+		$marketo_id = $this->marketo_id;
+
+		if( empty($marketo_id)) return;
+
+		if( $this->validate_expire_access_token() === true ){
+			// Re-Generate Token
+			do_action( 'cf7mkto_generate_identity_access_token', true );
+		}
+
+		// Check if list_id is empty
+		if( empty($list_id) )
+			return;
+
+		// Get Access Token
+		$token = $this->get_access_token_creds();	
+
+		$base_url = str_replace($this->mkto_replace_id, $marketo_id , $this->base_url );
+
+		// Set API Path
+		$path = $base_url . sprintf( '/rest/v1/lists/%1$s/leads.json', $list_id );	
+
+		// Set Access Token
+		$headers = array( 'Authorization' => 'Bearer ' . $token[ 'access_token' ],
+						  'Content-Type' => 'application/json' 
+						);
+
+		// Set Body Params
+		$params = array(
+			'input' => array( $data_ids )
+		);
+		
+		// Fire
+		$request = $this->call( $path, json_encode($params), $headers, 'POST' );
+		
+		return $request;	
+
 	}
 
 	

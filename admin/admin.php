@@ -94,6 +94,25 @@ class CF7_MarketoLite_Admin
 	            </td>
 	        </tr>
 
+	        <tr valign="top">
+	            <td class="marketo-th-label-1" scope="row"><?php echo esc_html__( 'Marketo List', 'contact-form-7' ); ?></td>
+	            <td class="marketo-th-label-2">
+	            	<?php
+	            		$marketo_list = apply_filters( 'cf7mkto_get_marketo_list', false );
+	            		$marketo_form_list_id =  get_post_meta( wp_kses_post($_REQUEST[ 'post' ]), 'marketo_form_list', true );
+
+	            	?>
+	               <select name="marketo_form_list" id="marketo_form_list">
+	                    <option value=""><?php echo esc_html( 'Please select...   ', 'contact-form-7' );?></option>
+	                    <?php if( ! empty($marketo_list)): ?>
+		                    <?php foreach ( $marketo_list as $key => $value ): ?>
+		                    	<option value="<?php echo esc_attr($key);?>" <?php selected( $key, $marketo_form_list_id ); ?>><?php echo esc_html__($value);?></option>
+		                    <?php endforeach;?>
+	                    <?php endif;?>
+	                </select>
+	            </td>
+	        </tr>
+
 		    </table>
 		</div> <!-- end of container -->
 
@@ -113,6 +132,10 @@ class CF7_MarketoLite_Admin
 	        update_post_meta( $post_id, 'marketo_enable_form', TRUE );
 	    } else {
 	        update_post_meta( $post_id, 'marketo_enable_form', FALSE );
+	    }
+
+	    if ( isset( $_POST['marketo_form_list'] ) ) {
+	        update_post_meta( $post_id, 'marketo_form_list', sanitize_text_field( $_POST['marketo_form_list'] ) );
 	    }
 
 	}

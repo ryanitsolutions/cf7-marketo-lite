@@ -10,16 +10,21 @@ This extension allows you to capture and generate leads, tracking and push data 
 
 ## Marketo Pro Version Features  
 
-* Premium Support
 * Easy and Manageable Extension Settings
-* Capture Lead Automatically using Contact Form 7
+* Capture Lead Automatically using Contact Form 7 (Opt-In)
 * Generate Lead Manually using Wordpress Custom Post Type
 * Update and Push to Marketo Lead Database Server
 * Save Marketo Lead Locally into Wordpress Custom Post Type
 * Leads Listing using Wordpress Custom Post Type Table
 * Pull Marketo List or Programs and Save to Custom Taxonomy
-* Lead Tracking (Munchkin).
-* Contact Form 7 Input Tag Generator for Marketo ( Text, Email, Url and Tel ... )
+* Wordpress Post/Page Lead Tracking (Munchkin).
+* Contact Form 7 Input Tag Generator for Marketo ( Text, Email, Url and Tel … )
+* Woocommmerce Marketo customer captured lead integration (Opt-In)
+* Woocommmerce Marketo tab settings
+* Woocommmerce sales orders Marketo tracking
+* Woocommmerce subscribe to marketo mailing list/program
+* Contact Form 7 Marketo lead structure management table
+* Contact Form 7 Marketo list/program management table
 
 For more information, see [Marketo Pro](https://codecanyon.net/item/marketo-pro-for-contact-form-7/21201340)
 
