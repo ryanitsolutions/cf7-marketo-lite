@@ -3,7 +3,7 @@
 Plugin Name: Marketo Lite for Contact Form 7
 Description: Marketo Lite for Contact Form 7 extension that can generate leads, tracking and push data into marketo server.
 Author: Ryan IT Solutions
-Version: 1.3
+Version: 1.4
 */
 
 

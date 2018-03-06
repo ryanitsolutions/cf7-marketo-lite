@@ -2,16 +2,16 @@
 Contributors: ryanitsolutions
 Tags: cf7, contact form 7, form, marketo, mkto, email, contact, opt-in, newsletter, mailing list
 Requires at least: 4.7
-Tested up to: 4.9.2
-Stable tag: 1.3
+Tested up to: 4.9.4
+Stable tag: 1.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-This extension allows you to capture and generate leads, tracking and push data into Marketo Lead Database using REST API.
+Marketo wordpress plugin extension allows you to capture and generate leads (Opt-In), Page and Post Tracking and push data into Marketo Lead Database connect using REST API. 
 
 == Description ==
 
-This extension allows you to capture and generate leads, tracking and push data into Marketo Lead Database using REST API.
+Marketo wordpress plugin extension allows you to capture and generate leads (Opt-In), Page and Post Tracking and push data into Marketo Lead Database connect using REST API. 
 
 = Marketo Lite Features =
 
@@ -31,10 +31,10 @@ This extension allows you to capture and generate leads, tracking and push data 
 * Pull Marketo List or Programs and Save to Custom Taxonomy
 * Wordpress Post/Page Lead Tracking (Munchkin).
 * Contact Form 7 Input Tag Generator for Marketo ( Text, Email, Url and Tel … )
-* Woocommmerce Marketo customer captured lead integration (Opt-In)
-* Woocommmerce Marketo tab settings
-* Woocommmerce sales orders Marketo tracking
-* Woocommmerce subscribe to marketo mailing list/program
+* Woocommerce Marketo customer captured lead integration (Opt-In)
+* Woocommerce Marketo tab settings
+* Woocommerce sales orders Marketo tracking
+* Woocommerce subscribe to marketo mailing list/program
 * Contact Form 7 Marketo lead structure management table
 * Contact Form 7 Marketo list/program management table
 
@@ -80,6 +80,9 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 = 1.3 =
 * UPDATE: Implement marketo list option on the contact form 7 tab
 
+= 1.4 =
+* UPDATE: Readme.txt
+
 == Upgrade Notice ==
 
 = 1.0  =
@@ -94,4 +97,7 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 
 = 1.3 =
 * UPDATE: Implement marketo list option on the contact form 7 tab
+
+= 1.4 =
+* UPDATE: Readme.txt
 
