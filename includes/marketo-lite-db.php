@@ -28,6 +28,7 @@ class CF7_MarketoLite_DB {
 
 		// Reset Table
 		add_action( 'cf7mkto_db_reset_table', array( $this, 'db_reset_table' ), 10, 1 );
+		add_action( 'cf7mkto_remove_terms', array( $this, 'remove_terms' ) );
 
 		//Get Data
 		add_filter( 'cf7mkto_get_describe_fields', array( $this, 'get_describe_fields' ), 10, 1 );
@@ -35,8 +36,6 @@ class CF7_MarketoLite_DB {
 		
 		//Check marketo data is exist
 		add_action( 'admin_init', array( 'CF7_MarketoLite_DB', 'check_marketo_describe_data' ) );
-		add_action( 'admin_init', array( $this, 'check_marketo_list_data' ) );
-
 
 	}
 
@@ -136,6 +135,7 @@ class CF7_MarketoLite_DB {
 
 		// remove marketo api settings
 		WPCF7::update_option( 'cf7_marketo', null );
+		do_action( 'cf7mkto_remove_terms', true );
 	}
 
 
@@ -347,65 +347,24 @@ class CF7_MarketoLite_DB {
 		
 	}
 
-	public function check_marketo_list_data(){
+	public function remove_terms(){
 
-		 $terms = get_terms( 'marketo_list', array( 'hide_empty' => false ) );
+		global $wpdb;
 
-		 if( empty($terms) ){
+		if( !is_admin()) return;
 
-		 	$api_creds 	= WPCF7::get_option( 'cf7_marketo' );
-
-			if( ! empty($api_creds) && array_key_exists( 'on' , $api_creds )){
-
-				$marketo_id 	= $api_creds['on'][ 'marketo_munchkin_id' ];
-
-				$marketo_list = apply_filters( 'cf7mkto_get_list_records', $marketo_id );
-
-				if( $marketo_list[ 'code' ] == 1 && $marketo_list[ 'response_code' ] == 200  ){
-					$data_list = $marketo_list[ 'response_body' ]->result;
-
-					//do_action( 'cf7mkto_db_reset_table', 'marketo_list' );
-
-					$params = array();
-
-					foreach ( $data_list as $key => $value) {
-
-							$params[ 'mkto_list_id' ] 		= ! empty($value->id) ? $value->id : '';
-							$params[ 'mkto_name' ]	 		= ! empty($value->name) ? $value->name : '';
-							$params[ 'mkto_programName' ]	= ! empty($value->programName) ? $value->programName : '';
-							$params[ 'mkto_workspaceName' ]	= ! empty($value->workspaceName) ? $value->workspaceName : '';
-							$params[ 'mkto_createdAt' ]		= ! empty($value->createdAt) ? $value->createdAt : '';
-							$params[ 'mkto_updatedAt' ]		= ! empty($value->updatedAt) ? $value->updatedAt : '';
-
-							//do_action( 'cf7mkto_save_marketo_list', $params );	
-							//do_action( 'cf7mkto_reset_marketo_list' );
-
-							$t = term_exists( ucwords($params[ 'mkto_name' ]), 'marketo_list',0 );
-
-							if(  $t == 0 || $t == null || empty($t) ){
-
-								$term = wp_insert_term(
-										  ucwords($params[ 'mkto_name' ]), // the term 
-										  'marketo_list', // the taxonomy
-										  array(
-										    'description'=> $params[ 'mkto_name' ],
-										    'slug' => strtolower($params[ 'mkto_name' ]),
-										    'parent'=> 0  // get numeric term id
-										  )
-										);
-
-								$t_id = $term[ 'term_taxonomy_id' ];
-								update_option( "mkto_taxonomy_term_list_$t_id", $params[ 'mkto_list_id' ] );  
-							}
-							
-
-						}
+		foreach ( array( 'marketo_list' ) as $taxonomy ) {
+			$terms = $wpdb->get_results( $wpdb->prepare( "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE tt.taxonomy IN ('%s') ORDER BY t.name ASC", $taxonomy ) );
+		        
+			if ( $terms ) {
+				foreach ( $terms as $term ) {
+					$wpdb->delete( $wpdb->term_taxonomy, array( 'term_taxonomy_id' => $term->term_taxonomy_id ) );
+					$wpdb->delete( $wpdb->terms, array( 'term_id' => $term->term_id ) );
+					delete_option( "mkto_taxonomy_term_list_" .   $term->term_id);
 				}
-
 			}
-		 			
-		 }
-		 
+		}
+
 	}
 
 
