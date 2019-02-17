@@ -2,8 +2,8 @@
 Contributors: ryanitsolutions
 Tags: cf7, contact form 7, form, marketo, mkto, email, contact, opt-in, newsletter, mailing list
 Requires at least: 4.7
-Tested up to: 4.9.7
-Stable tag: 1.4.1
+Tested up to: 5.0.3
+Stable tag: 1.6.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -48,7 +48,9 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 
 *   Contact Form 7 4.7
 *   WordPress 4.4+
+*   WordPress 5.0+
 *   PHP 5+
+*   PHP 7+
 
 == Installation ==
 
@@ -87,6 +89,11 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 * FIXED: Marketo Get Access Token  
 * FIXED: bug switch connecting reference id from term taxonomy id to term id
 
+= 1.6 =
+* UPDATE: update for wordpress 5.0+
+
+
+
 == Upgrade Notice ==
 
 = 1.0  =
@@ -108,5 +115,8 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 = 1.5 =
 * UPDATE: Marketo Get Access Token  
 * UPDATE: bug switch connecting reference id from term taxonomy id to term id
+
+= 1.6 =
+* UPDATE: update for wordpress 5.0+
 
 

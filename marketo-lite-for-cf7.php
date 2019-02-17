@@ -1,10 +1,16 @@
 <?php
 /*
-Plugin Name: Marketo Lite for Contact Form 7
-Description: Marketo Lite for Contact Form 7 extension that can generate leads, tracking and push data into marketo server.
-Author: Ryan IT Solutions
-Version: 1.5
-*/
+ * Plugin Name: Marketo Lite for Contact Form 7
+ * Description: Marketo Lite for Contact Form 7 extension that can generate leads, tracking and push data into marketo server.
+ * Plugin URI: https://www.ryanplugins.com/
+ * Author: Ryan IT Solutions
+ * Author URI: https://www.ryanplugins.com/
+ * Version: 1.6
+ *
+ * WC requires at least: 2.2
+ * WC tested up to: 3.5
+ *
+ */
 
 
 if ( ! defined( 'ABSPATH' ) ) exit;

@@ -36,7 +36,9 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 
 *   Contact Form 7 4.7
 *   WordPress 4.4+
+*   WordPress 5.0+
 *   PHP 5+
+*   PHP 7+
 
 ## Installation 
 
