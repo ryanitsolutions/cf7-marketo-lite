@@ -55,6 +55,7 @@ class CF7_MarketoLite_API {
 
 		// Marketo Tokens 
 		add_action( 'cf7mkto_generate_identity_access_token', array( $this, 'generate_access_token' ) );
+		add_filter( 'cf7mkto_generate_identity_access_token', array( $this, 'generate_access_token' ) );
 		add_filter( 'cf7mkto_get_access_token_creds', array( $this, 'get_access_token_creds' ));
 
 		// Marketo Leads 
@@ -69,6 +70,7 @@ class CF7_MarketoLite_API {
 
 		//Static Lists : Marketo Lists Controller
 		add_filter( 'cf7mkto_get_list_records', array( $this, 'get_list_records' ), 10, 1 );
+		add_filter( 'cf7mkto_get_list_by_name', array( $this, 'get_list_by_name' ), 10, 2 );
 
 		// Add leads to Static List
 		add_action( 'cf7mkto_add_lead_to_list', array( $this, 'add_lead_to_list' ), 10, 2 );
@@ -94,12 +96,7 @@ class CF7_MarketoLite_API {
 		$marketo_id = $this->marketo_id;
 
 		if( empty($marketo_id)) return;
-
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
-
+		
 		// Get Access Token
 		$token = $this->get_access_token_creds();	
 
@@ -217,7 +214,11 @@ class CF7_MarketoLite_API {
 
 			);
 
-			$this->update_access_token( $cf7_id, $creds );
+			//$this->update_access_token( $cf7_id, $creds );
+
+			return $creds;
+		} else {
+			return array();
 		}
 
 	}
@@ -257,8 +258,7 @@ class CF7_MarketoLite_API {
 	 */
 
 	public function get_access_token_creds(){
-		$cf7_id  = $this->cf7_id;	
-		return get_option( $this->option_prefix . $cf7_id );
+		return apply_filters( 'cf7mkto_generate_identity_access_token', true );
 	}
 
 	/**
@@ -294,11 +294,6 @@ class CF7_MarketoLite_API {
 		$marketo_id = $this->marketo_id;
 
 		if( empty($marketo_id)) return;
-
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
 
 		// Get Access Token
 		$token = $this->get_access_token_creds();	
@@ -345,11 +340,6 @@ class CF7_MarketoLite_API {
 
 		if( empty($marketo_id)) return;
 
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
-
 		if(empty($lead_id)) return;
 
 		// Get Access Token
@@ -392,11 +382,6 @@ class CF7_MarketoLite_API {
 
 		if( empty($marketo_id)) return;
 
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
-
 		if(empty($lead_id)) return;
 
 		// Get Access Token
@@ -438,11 +423,6 @@ class CF7_MarketoLite_API {
 
 		if( empty($nextPageToken)) return;
 
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
-
 		// Get Access Token
 		$token = $this->get_access_token_creds();	
 
@@ -483,11 +463,6 @@ class CF7_MarketoLite_API {
 		
 		if( empty($marketo_id)) return;
 
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
-
 		// Get Access Token
 		$token = $this->get_access_token_creds();	
 
@@ -519,11 +494,6 @@ class CF7_MarketoLite_API {
 		$marketo_id = ! empty($this->marketo_id) ? $this->marketo_id : $marketo_id;
 
 		if ( empty($marketo_id)) return;
-
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
 
 		// Get Access Token
 		$token = $this->get_access_token_creds();	
@@ -561,11 +531,6 @@ class CF7_MarketoLite_API {
 
 		if( empty($marketo_id)) return;
 
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
-
 		// Check if list_id is empty
 		if( empty($list_id) )
 			return;
@@ -602,11 +567,6 @@ class CF7_MarketoLite_API {
 
 		if( empty($marketo_id)) return;
 
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
-
 		// Get Access Token
 		$token = $this->get_access_token_creds();	
 
@@ -618,8 +578,6 @@ class CF7_MarketoLite_API {
 				'sinceDatetime' => date_i18n( 'Y-m-dTg:i:s', time() ),
 			), $base_url . '/rest/v1/activities/pagingtoken.json');
 
-		//echo "<pre>"; print_r($path); echo "</pre>";
-		//exit;
 		
 		// Set Access Token
 		$headers = array( 'Authorization' => 'Bearer ' . $token[ 'access_token' ] );
@@ -642,12 +600,6 @@ class CF7_MarketoLite_API {
 		if( empty($marketo_id)) return;
 
 		if( empty($id)) return;
-
-
-		if( $this->validate_expire_access_token() === true ){
-			// Re-Generate Token
-			do_action( 'cf7mkto_generate_identity_access_token', true );
-		}
 
 		// Get Access Token
 		$token = $this->get_access_token_creds();	
@@ -677,6 +629,40 @@ class CF7_MarketoLite_API {
 		return $request;
 
 	}
+
+	/**
+	 * Marketo Get List By Name
+	 *
+	 * @return array
+	 */
+
+	public function get_list_by_name( $marketo_id = '', $name ){
+
+		$marketo_id = ! empty($this->marketo_id) ? $this->marketo_id : $marketo_id;
+
+		if ( empty($marketo_id)) return;
+
+		// Get Access Token
+		$token = $this->get_access_token_creds();	
+
+		$base_url = str_replace($this->mkto_replace_id, $marketo_id , $this->base_url );
+
+		// Set API Path
+		$path = $base_url . '/rest/v1/lists.json';	
+
+		// Set Access Token
+		$headers = array( 'Authorization' => 'Bearer ' . $token[ 'access_token' ] );
+
+		// Set Body Params
+		$params = array( 'name' => $name );	
+		
+		// Fire
+		$request = $this->call( $path, $params, $headers, 'GET' );
+		
+
+		return $request;	
+	}
+
 
 	
 

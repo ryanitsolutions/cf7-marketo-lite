@@ -2,16 +2,16 @@
 Contributors: ryanitsolutions
 Tags: cf7, contact form 7, form, marketo, mkto, email, contact, opt-in, newsletter, mailing list
 Requires at least: 4.7
-Tested up to: 4.9.4
-Stable tag: 1.4
+Tested up to: 4.9.7
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Marketo wordpress plugin extension allows you to capture and generate leads (Opt-In), Page and Post Tracking and push data into Marketo Lead Database connect using REST API. 
+This extension allows you to capture and generate leads, tracking and push data into Marketo Lead Database using REST API.
 
 == Description ==
 
-Marketo wordpress plugin extension allows you to capture and generate leads (Opt-In), Page and Post Tracking and push data into Marketo Lead Database connect using REST API. 
+This extension allows you to capture and generate leads, tracking and push data into Marketo Lead Database using REST API.
 
 = Marketo Lite Features =
 
@@ -83,6 +83,10 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 = 1.4 =
 * UPDATE: Readme.txt
 
+= 1.5 =
+* FIXED: Marketo Get Access Token  
+* FIXED: bug switch connecting reference id from term taxonomy id to term id
+
 == Upgrade Notice ==
 
 = 1.0  =
@@ -100,4 +104,9 @@ For more information, see [REST API](http://marketohost.wpengine.com/rest-api/).
 
 = 1.4 =
 * UPDATE: Readme.txt
+
+= 1.5 =
+* UPDATE: Marketo Get Access Token  
+* UPDATE: bug switch connecting reference id from term taxonomy id to term id
+
 

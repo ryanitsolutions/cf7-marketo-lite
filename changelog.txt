@@ -14,3 +14,7 @@
 = 1.4 03/05/2018 =
 * UPDATE: Change Readme.txt
 
+= 1.5 07/10/2018 =
+* UPDATE: Generate Access Token Bug
+* UPDATE: bug switch connecting reference id from term taxonomy id to term id
+

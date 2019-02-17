@@ -109,7 +109,7 @@ class CF7_MarketoLite_Settings extends WPCF7_Service {
 					// Process the Marketo api calls
 					$marketo_id 	  = $marketo_munchkin_id;
 
-					do_action( 'cf7mkto_generate_identity_access_token', true );
+					//do_action( 'cf7mkto_generate_identity_access_token', true );
 
 					$tokens = apply_filters( 'cf7mkto_get_access_token_creds', true  );
 
@@ -170,47 +170,6 @@ class CF7_MarketoLite_Settings extends WPCF7_Service {
 							
 						}
 
-						// Marketo List
-
-						$marketo_list = apply_filters( 'cf7mkto_get_list_records', $marketo_id );
-
-						if( $marketo_list[ 'code' ] == 1 && $marketo_list[ 'response_code' ] == 200  ){
-							$data_list = $marketo_list[ 'response_body' ]->result;
-
-							$params = array();
-
-							foreach ( $data_list as $key => $value) {
-
-									$params[ 'mkto_list_id' ] 		= ! empty($value->id) ? $value->id : '';
-									$params[ 'mkto_name' ]	 		= ! empty($value->name) ? $value->name : '';
-									$params[ 'mkto_programName' ]	= ! empty($value->programName) ? $value->programName : '';
-									$params[ 'mkto_workspaceName' ]	= ! empty($value->workspaceName) ? $value->workspaceName : '';
-									$params[ 'mkto_createdAt' ]		= ! empty($value->createdAt) ? $value->createdAt : '';
-									$params[ 'mkto_updatedAt' ]		= ! empty($value->updatedAt) ? $value->updatedAt : '';
-									
-									$t = term_exists( ucwords($params[ 'mkto_name' ]), 'marketo_list',0 );
-
-									if(  $t == 0 || $t == null || empty($t) ){
-
-										$term = wp_insert_term(
-												  ucwords($params[ 'mkto_name' ]), // the term 
-												  'marketo_list', // the taxonomy
-												  array(
-												    'description'=> $params[ 'mkto_name' ],
-												    'slug' => strtolower($params[ 'mkto_name' ]),
-												    'parent'=> 0  // get numeric term id
-												  )
-												);
-
-										$t_id = $term[ 'term_taxonomy_id' ];
-										update_option( "mkto_taxonomy_term_list_$t_id", $params[ 'mkto_list_id' ] );  
-									}
-									
-
-								}
-						}	
-
-					
 
 					$redirect_to = $this->menu_page_url( array(
 						'message' => 'success',
@@ -251,7 +210,7 @@ class CF7_MarketoLite_Settings extends WPCF7_Service {
 				} else {
 					$redirect_to = $this->menu_page_url( array(
 						'action' => 'setup',
-						'message' => 'invalid',
+						'message' => 'success',
 					) );
 				}
 					

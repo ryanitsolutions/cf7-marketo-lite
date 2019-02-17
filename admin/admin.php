@@ -28,15 +28,40 @@ class CF7_MarketoLite_Admin
 		
 		if( ! array_key_exists( 'on', $marketo_settings)) return;
 
-		// Scripts
-		add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
-		add_action( 'admin_enqueue_scripts', array( $this , 'css' ) );
+		if( $this->load_assets_by_page() === true ){
+			// Scripts
+			add_action( 'admin_enqueue_scripts', array( $this, 'scripts' ) );
+			add_action( 'admin_enqueue_scripts', array( $this , 'css' ) );
+		}
 
 		// Tab
 		add_filter( 'wpcf7_editor_panels', array( $this , 'editor_tab' ) );
 
 		// Actions
 		add_action( 'save_post_wpcf7_contact_form', array( $this, 'set_post_type_settings' ), 10, 3  );
+
+		add_action( 'admin_enqueue_scripts', array( $this, 'admin_script' ) );
+        add_action( 'admin_footer', array( $this, 'admin_script_footer' ) );
+
+
+
+	}
+
+	public function load_assets_by_page(){
+
+		$pages = array(
+			'wpcf7',
+			'wpcf7-new',
+			'wpcf7-integration'
+		);
+
+		$page = ! empty($_REQUEST[ 'page' ]) ? $_REQUEST[ 'page' ] : '';
+
+		if( in_array( $page, $pages) ){
+			return true;
+		}
+
+		return false;
 
 	}
 
@@ -45,6 +70,7 @@ class CF7_MarketoLite_Admin
 		$screen = $_REQUEST;
 
 		wp_enqueue_script( 'marketo-scripts',  plugins_url( 'assets/js/tag-generator.js', __FILE__ ), '', '', true );
+		wp_enqueue_script( 'marketo-select2',  'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js', '', '', true );
 
 
 	}
@@ -52,7 +78,9 @@ class CF7_MarketoLite_Admin
 	public function css(){
 				
 		wp_register_style( 'mkto.admin.style',  plugins_url( 'assets/css/marketo-admin.css' , __FILE__ ) );
+		wp_register_style( 'mkto.admin.select2.style', 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css' );
 		wp_enqueue_style( 'mkto.admin.style' );
+		wp_enqueue_style( 'mkto.admin.select2.style' );
 			
 	}
 
@@ -102,14 +130,23 @@ class CF7_MarketoLite_Admin
 	            		$marketo_form_list_id =  get_post_meta( wp_kses_post($_REQUEST[ 'post' ]), 'marketo_form_list', true );
 
 	            	?>
-	               <select name="marketo_form_list" id="marketo_form_list">
+	               <select name="marketo_form_list" id="marketo_form_list" class="marketo_select_list" style="width: 100%;">
 	                    <option value=""><?php echo esc_html( 'Please select...   ', 'contact-form-7' );?></option>
 	                    <?php if( ! empty($marketo_list)): ?>
 		                    <?php foreach ( $marketo_list as $key => $value ): ?>
-		                    	<option value="<?php echo esc_attr($key);?>" <?php selected( $key, $marketo_form_list_id ); ?>><?php echo esc_html__($value);?></option>
+		                    	<option value="<?php echo esc_attr($key);?>" <?php selected( $key, $marketo_form_list_id ); ?>><?php 
+		                    		$mkto_id = get_option( 'mkto_taxonomy_term_list_' . $key  );
+		                    		$name = str_replace( '('.$mkto_id.')', '', $value);
+		                    	echo esc_html__($name);?></option>
 		                    <?php endforeach;?>
 	                    <?php endif;?>
 	                </select>
+	            </td>
+	        </tr>
+
+	        <tr>
+	        	<td class="marketo-th-label-1" scope="row"><?php echo esc_html__( 'Not in the list?', 'contact-form-7' ); ?></td>
+	            <td class="marketo-th-label-2"> <a href="javascript:;" class="button marketo-addexisting-open-dialog"><?php echo __( 'Search/Add', 'contact-form-7' )?></a>
 	            </td>
 	        </tr>
 
@@ -148,6 +185,65 @@ class CF7_MarketoLite_Admin
 
 	return array_merge( $plugin_links, $links );
 	}
+
+	public function admin_script_footer(){
+
+      if( ! empty( $_REQUEST[ 'page' ] ) && $_REQUEST[ 'page' ] == 'wpcf7'  ){
+         $nonce = wp_create_nonce( "marketo_search_existing_list_nonce" );
+        ?>
+        <div id="marketo-addnew-dialog" class="hidden" style="max-width:800px">
+          <div style="">
+            <input type="text" name="marketo_exist_list_name" class="marketo_exist_list_name" size="50" placeholder="<?php echo __( 'Enter Marketo List Name' ) ?>">
+          <button class="button button-primary marketo_add_exist_list_btn" data-nonce="<?php echo $nonce; ?>"  ><?php echo __( 'Search' )?></button>  
+          </div>
+          
+          <p class="marketo_search_message"></p>
+          <div class="marketo_search_existing_list"></div>
+        </div>
+
+          <script>
+          jQuery( document ).ready( function( $ ) {
+            $('#marketo-addnew-dialog').dialog({
+              title: 'Search Marketo List Name',
+              dialogClass: 'wp-dialog',
+              autoOpen: false,
+              draggable: false,
+              width: 'auto',
+              modal: true,
+              resizable: false,
+              closeOnEscape: true,
+              position: {
+                my: "center",
+                at: "center",
+                of: window
+              },
+              open: function () {
+                $('.ui-widget-overlay').bind('click', function(){
+                  $('#marketo-addnew-dialog').dialog('close');
+                })
+              },
+              create: function () {
+                $('.ui-dialog-titlebar-close').addClass('ui-button');
+              },
+            });
+            $('.marketo-addexisting-open-dialog').click(function(e) {
+              e.preventDefault();
+              $('#marketo-addnew-dialog').dialog('open');
+            });
+          });
+          </script>
+
+        <?php
+      }
+    }
+
+    public function admin_script(){
+
+      if( ! empty( $_REQUEST[ 'page' ] ) && $_REQUEST[ 'page' ] == 'wpcf7'  ){
+          wp_enqueue_script( 'jquery-ui-dialog' ); 
+          wp_enqueue_style( 'wp-jquery-ui-dialog' );
+      }
+    }
 
 
 }

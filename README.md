@@ -1,5 +1,5 @@
 # Marketo Lite for Contact Form 7
-Marketo wordpress plugin extension allows you to capture and generate leads (Opt-In), Page and Post Tracking and push data into Marketo Lead Database connect using REST API. 
+This extension allows you to capture and generate leads, tracking and push data into Marketo Lead Database using REST API.
 
 ## Marketo Lite Features
 

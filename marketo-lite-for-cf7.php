@@ -3,7 +3,7 @@
 Plugin Name: Marketo Lite for Contact Form 7
 Description: Marketo Lite for Contact Form 7 extension that can generate leads, tracking and push data into marketo server.
 Author: Ryan IT Solutions
-Version: 1.4
+Version: 1.5
 */
 
 
@@ -39,6 +39,7 @@ final class CF7_MarketoLite
 
 		// Initialize
 		add_action( 'wpcf7_init', 'wpcf7_marketo_lite_register_service' );
+		add_action( 'plugins_loaded', array( 'CF7_Marketo_Ajax', 'instance' ) );
 		add_action( 'plugins_loaded', array( 'CF7_MarketoLite_API' , 'instance' ) );
 		add_action( 'plugins_loaded', array( 'CF7_MarketoLite_DB' , 'instance' ) );
 		add_action( 'plugins_loaded', array( 'CF7_MarketoLite_Form_Text' , 'instance' ) );
@@ -73,6 +74,7 @@ final class CF7_MarketoLite
 		include_once $this->plugin_path() . "/includes/marketo-lite-db.php";
 		include_once $this->plugin_path() . "/includes/marketo-lite-form-text.php";	
 		include_once $this->plugin_path() . "/includes/marketo-lite-core.php";	
+		include_once $this->plugin_path() . "/includes/marketo-ajax.php";	
 
 		// Admin
 		include_once $this->plugin_path() . "/admin/admin.php";	
